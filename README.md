@@ -2,96 +2,54 @@
 
 
 
-# [Project Name] 🎯
+Concept Drift
 
 
-## Basic Details
-### Team Name: [Name]
+Team Name: DD
+
+- Team Lead: Dhina Fathima - Sahrdaya College Of Engineering and Technology
+- Member 2: Aysha Duaa - Sahrdaya College Of Engineering and Technology
+
+Project Description
+Concept Drift is an interactive web experience that challenges users to connect two seemingly unrelated concepts through the shortest possible chain of meaningful connections. As users make choices, the conceptual web dynamically expands and allows them to explore how far an idea can drift from its starting point.
 
 
-### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+Problem: People are constantly connecting unrelated ideas in their heads, yet there is no efficient way to measure how many conceptual steps it takes to get from one completely random thought to another.
 
-### Project Description
-[2-3 lines about what your project does]
+Solution: Concept Drift is a completely unnecessary tool that finds the shortest conceptual path between any two ideas and lets users deliberately wander off that path just to see where they end up.
 
-### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+## Features
 
-### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+- **Living Conceptual Web**: Built with high-performance 2D HTML5 Canvas rendering hundreds of latent dust motes and organic glowing nodes.
+- **Progressive Exploration**: Each step presents 3–5 semantically defensible neighbors. The graph grows dynamically as you explore.
+- **Shortest-Path Logic**: True BFS graph search calculates the shortest path discovered in the conceptual graph.
+- **Drift Scoring**: Tracks steps taken, theoretical minimum path, drift distance, and conceptual efficiency.
+- **Backtracking**: Click any earlier concept in your breadcrumb journey to backtrack and explore alternative branches.
+- **Dark, Controlled-Chaos Aesthetic**: Deep obsidian background, pulsing destination beacons, glowing conduit paths, and dynamic hover labels.
+- **Generative Soundscape**: Ambient sub-bass resonance and crystalline micro-interaction chimes using Web Audio API.
+- **Dual-Engine Architecture**: Runs 100% out-of-the-box with a rich built-in Semantic Knowledge Engine, with instant automatic upgrade to Google Gemini or OpenAI when an API key is provided.
 
-## Technical Details
-### Technologies/Components Used
-For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+## Quick Start
 
-For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+### 1. Launch the Server
+Double-click `bin\run.bat` or run:
+```cmd
+cd c:\useless\concept-drift
+.\bin\run.bat
+```
 
-### Implementation
-For Software:
-# Installation
-[commands]
+### 2. Open in Browser
+Visit [http://localhost:3000](http://localhost:3000)
 
-# Run
-[commands]
+### 3. (Optional) Configure Live AI API
+```powershell
+$env:GEMINI_API_KEY = "your_key_here"
+# or
+$env:OPENAI_API_KEY = "your_key_here"
+node server/server.js
+```
 
-### Project Documentation
-For Software:
 
-# Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
-
-# Diagrams
-![Workflow](Add your workflow/architecture diagram here)
-*Add caption explaining your workflow*
-
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
-### Project Demo
-# Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
-
-# Additional Demos
-[Add any extra demo materials/links]
-
-## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
