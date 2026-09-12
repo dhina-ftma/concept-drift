@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Concept Drift — Connect Anything to Anything</title>
+  <meta name="description" content="An experimental interactive conceptual network game. How short can you make the conceptual connection between two unrelated things?">
+  <meta name="theme-color" content="#fafbfc">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/animations.css">
+</head>
+<body>
+
+  <!-- Background 2D Canvas Container -->
+  <div id="canvas-container">
+    <canvas id="drift-canvas"></canvas>
+  </div>
+
+  <!-- Ambient Vignette & Grain Overlay -->
+  <div class="vignette-overlay"></div>
+
+  <!-- Landing Screen -->
+  <main id="landing-screen">
+    <div class="glass-panel landing-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 16px;">
+        <div class="brand-badge" style="margin-bottom: 0;">
+          <span class="brand-badge-dot"></span>
+          <span>Living Conceptual Web</span>
+        </div>
+        <button id="btn-api-settings" class="icon-btn" title="AI Model & API Key Settings" style="width: 32px; height: 32px;">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+
+      <h1 class="landing-title">Concept Drift</h1>
+      <p class="landing-subtitle">Connect anything to anything.</p>
+
+      <!-- Concept Inputs -->
+      <div class="inputs-container">
+        <div class="input-group">
+          <label class="input-label" for="start-concept">Start Concept</label>
+          <div class="input-wrapper">
+            <span class="input-indicator start"></span>
+            <input 
+              type="text" 
+              id="start-concept" 
+              class="concept-input" 
+              placeholder="e.g. Coffee" 
+              value="Coffee"
+              autocomplete="off"
+              spellcheck="false"
+            >
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label" for="dest-concept">Destination</label>
+          <div class="input-wrapper">
+            <span class="input-indicator dest"></span>
+            <input 
+              type="text" 
+              id="dest-concept" 
+              class="concept-input" 
+              placeholder="e.g. Black Holes" 
+              value="Black Holes"
+              autocomplete="off"
+              spellcheck="false"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="buttons-group">
+        <button id="btn-drift" class="btn-primary">
+          <span>Drift</span>
+        </button>
+        <button id="btn-random" class="btn-secondary">
+          <span>Random Drift</span>
+        </button>
+      </div>
+
+      <!-- Curated Exploration Presets -->
+      <div class="preset-section">
+        <span class="preset-title">Curated Expeditions</span>
+        <div class="preset-chips">
+          <button class="preset-chip" data-start="Coffee" data-dest="Black Holes">Coffee → Black Holes</button>
+          <button class="preset-chip" data-start="Dinosaurs" data-dest="TikTok">Dinosaurs → TikTok</button>
+          <button class="preset-chip" data-start="Shakespeare" data-dest="Wi-Fi">Shakespeare → Wi-Fi</button>
+          <button class="preset-chip" data-start="Pizza" data-dest="Quantum Mechanics">Pizza → Quantum Mechanics</button>
+          <button class="preset-chip" data-start="Bananas" data-dest="Nuclear Physics">Bananas → Nuclear Physics</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- In-Game HUD -->
+  <header id="hud">
+    <!-- Top Bar -->
+    <div class="hud-top-bar">
+      <!-- Target Path Banner -->
+      <div class="glass-panel hud-target-card">
+        <div class="target-badge origin">
+          <span class="brand-badge-dot"></span>
+          <span id="hud-origin">Start</span>
+        </div>
+        <span class="target-arrow">⟶</span>
+        <div class="target-badge dest">
+          <span class="brand-badge-dot" style="background: var(--accent-coral); box-shadow: 0 0 6px var(--accent-coral);"></span>
+          <span id="hud-destination">Destination</span>
+        </div>
+      </div>
+
+      <!-- Step Counter & Controls -->
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <div class="glass-panel hud-stats-card">
+          <div class="stat-item">
+            <span id="hud-steps" class="stat-value">0</span>
+            <span class="stat-label">Steps Taken</span>
+          </div>
+        </div>
+
+        <div class="hud-controls">
+          <button id="btn-recenter" class="icon-btn" title="Recenter Camera on Current Concept">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v4m0 12v4M2 12h4m12 0h4"></path></svg>
+          </button>
+          <button id="btn-zoom-in" class="icon-btn" title="Zoom In">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <button id="btn-zoom-out" class="icon-btn" title="Zoom Out">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+          <button id="btn-mute" class="icon-btn" title="Toggle Sound">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          </button>
+          <button id="btn-reset" class="icon-btn" title="New Drift / Reset">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Journey Breadcrumb Bar -->
+    <div class="hud-bottom-bar">
+      <div class="glass-panel path-history-card">
+        <span class="history-title">Journey:</span>
+        <div id="history-chain" class="history-chain">
+          <!-- Dynamically populated clickable node pills -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Node Hover Tooltip -->
+  <div id="node-tooltip">
+    <div class="tooltip-concept">Concept</div>
+    <div class="tooltip-meta">RELEVANCE: 85% • CLICK TO DRIFT</div>
+  </div>
+
+  <!-- Completion Modal ("CONNECTION FOUND") -->
+  <div id="completion-modal">
+    <div class="glass-panel completion-card">
+      <div class="completion-header-badge">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span>Destination Reached</span>
+      </div>
+
+      <h2 class="completion-title">Connection Found</h2>
+
+      <!-- Metrics Grid -->
+      <div class="completion-metrics">
+        <div class="metric-box">
+          <div id="metric-user-steps" class="metric-num">0</div>
+          <div class="metric-tag">Your Steps</div>
+        </div>
+
+        <div class="metric-box highlight">
+          <div id="metric-shortest-steps" class="metric-num">0</div>
+          <div class="metric-tag">Shortest Path Found</div>
+        </div>
+
+        <div class="metric-box">
+          <div id="metric-efficiency" class="metric-num">100%</div>
+          <div class="metric-tag">Efficiency</div>
+        </div>
+      </div>
+
+      <!-- Discovered Path Journey -->
+      <div class="path-summary-container">
+        <div class="path-summary-label">Your Conceptual Route</div>
+        <div id="completion-path-flow" class="path-steps-flow">
+          <!-- Dynamically populated path steps -->
+        </div>
+      </div>
+
+      <p id="drift-commentary" class="drift-commentary">You drifted 1 step further into the conceptual web.</p>
+
+      <div class="completion-actions">
+        <button id="btn-completion-restart" class="btn-primary" style="flex: 1.5;">
+          <span>Drift Again</span>
+        </button>
+        <button id="btn-completion-inspect" class="btn-secondary" style="flex: 1;">
+          <span>Inspect Web</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Settings Modal -->
+  <div id="api-settings-modal" class="modal-backdrop" style="position: absolute; inset: 0; z-index: 40; display: none; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(12px); padding: 24px;">
+    <div class="glass-panel" style="width: 100%; max-width: 460px; padding: 32px; text-align: left; background: #ffffff; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--text-primary);">AI Engine Settings</h3>
+        <button id="btn-close-key" class="icon-btn" style="width: 28px; height: 28px; border: none; background: transparent; cursor: pointer; color: var(--text-secondary);">✕</button>
+      </div>
+
+      <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px;">
+        By default, Concept Drift runs on our <strong>Dynamic Semantic Engine</strong> with live linguistic associations for any word. You can also connect your own <strong>Google Gemini</strong> or <strong>OpenAI</strong> API key for direct LLM generation.
+      </p>
+
+      <div class="input-group" style="margin-bottom: 20px;">
+        <label class="input-label" for="input-api-key">API Key (Gemini or OpenAI)</label>
+        <input 
+          type="password" 
+          id="input-api-key" 
+          class="concept-input" 
+          placeholder="AIza... or sk-..."
+          style="padding-left: 16px;"
+          autocomplete="off"
+        >
+        <span style="display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">Saved locally in your browser session. Never sent to third parties.</span>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button id="btn-save-key" class="btn-primary" style="flex: 1; padding: 10px 16px;">
+          <span>Save Settings</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Alerts Container -->
+  <div id="toast-container"></div>
+
+  <!-- Application Entry Point -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

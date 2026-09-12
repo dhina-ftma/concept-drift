@@ -1,0 +1,20 @@
+{
+  "name": "concept-drift",
+  "version": "1.0.0",
+  "description": "An interactive web experience exploring conceptual connections across a dynamic living network of ideas.",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "keywords": [
+    "concept-drift",
+    "visualization",
+    "canvas",
+    "graph",
+    "ai",
+    "game"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
